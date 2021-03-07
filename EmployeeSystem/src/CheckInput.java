@@ -21,90 +21,86 @@ public class CheckInput {
 	// check if any of records in file is active - ID is not 0
 	public boolean isSomeoneToDisplay() {
 		boolean someoneToDisplay = false;
-		// open file for reading
 		application.openReadFile(file.getAbsolutePath());
-		// check if any of records in file is active - ID is not 0
 		someoneToDisplay = application.isSomeoneToDisplay();
-		application.closeReadFile();// close file for reading
-		// if no records found clear all text fields and display message
+		application.closeReadFile();
 		if (!someoneToDisplay) {
-			currentEmployee = null;
-			idField.setText("");
-			ppsField.setText("");
-			surnameField.setText("");
-			firstNameField.setText("");
-			salaryField.setText("");
-			genderCombo.setSelectedIndex(0);
-			departmentCombo.setSelectedIndex(0);
-			fullTimeCombo.setSelectedIndex(0);
+			emptyTextFields();
 			JOptionPane.showMessageDialog(null, "No Employees registered!");
+
 		}
 		return someoneToDisplay;
-	}// end isSomeoneToDisplay
+	}
+
+	public void emptyTextFields() {
+		currentEmployee = null;
+		idField.setText("");
+		ppsField.setText("");
+		surnameField.setText("");
+		firstNameField.setText("");
+		salaryField.setText("");
+		genderCombo.setSelectedIndex(0);
+		departmentCombo.setSelectedIndex(0);
+		fullTimeCombo.setSelectedIndex(0);
+
+	}
 
 	// check for correct PPS format and look if PPS already in use
 	public boolean correctPps(String pps, long currentByte) {
 		boolean ppsExist = false;
-		// check for correct PPS format based on assignment description
+
 		if (pps.length() == 8 || pps.length() == 9) {
 			if (Character.isDigit(pps.charAt(0)) && Character.isDigit(pps.charAt(1)) && Character.isDigit(pps.charAt(2))
 					&& Character.isDigit(pps.charAt(3)) && Character.isDigit(pps.charAt(4))
 					&& Character.isDigit(pps.charAt(5)) && Character.isDigit(pps.charAt(6))
 					&& Character.isLetter(pps.charAt(7)) && (pps.length() == 8 || Character.isLetter(pps.charAt(8)))) {
-				// open file for reading
+
 				application.openReadFile(file.getAbsolutePath());
-				// look in file is PPS already in use
+
 				ppsExist = application.isPpsExist(pps, currentByte);
-				application.closeReadFile();// close file for reading
-			} // end if
-			else
+				application.closeReadFile();
+			} else
 				ppsExist = true;
-		} // end if
-		else
+		} else
 			ppsExist = true;
 
 		return ppsExist;
-	}// end correctPPS
+	}
 
 	// check if file name has extension .dat
 	public boolean checkFileName(File fileName) {
 		boolean checkFile = false;
 		int length = fileName.toString().length();
-
-		// check if last characters in file name is .dat
 		if (fileName.toString().charAt(length - 4) == '.' && fileName.toString().charAt(length - 3) == 'd'
 				&& fileName.toString().charAt(length - 2) == 'a' && fileName.toString().charAt(length - 1) == 't')
 			checkFile = true;
 		return checkFile;
-	}// end checkFileName
+	}
 
 	// check if any changes text field where made
 	public boolean checkForChanges() {
 		boolean anyChanges = false;
-		// if changes where made, allow user to save there changes
 		if (change) {
-			save.saveChanges();// save changes
+			save.saveChanges();
 			anyChanges = true;
-		} // end if
-			// if no changes made, set text fields as unenabled and display
-			// current Employee
+		}
+
 		else {
 			edit.setEnabled(false);
 			display.displayRecords(currentEmployee);
-		} // end else
+		}
 
 		return anyChanges;
-	}// end checkForChanges
+	}
 
-	// check for input in text fields
 	public boolean checkInput() {
 		boolean valid = true;
-		// if any of inputs are in wrong format, colour text field and display
-		// message
+
 		if (ppsField.isEditable() && ppsField.getText().trim().isEmpty()) {
 			ppsField.setBackground(new Color(255, 150, 150));
 			valid = false;
 		} // end if
+
 		if (ppsField.isEditable() && correctPps(ppsField.getText().trim(), currentByteStart)) {
 			ppsField.setBackground(new Color(255, 150, 150));
 			valid = false;

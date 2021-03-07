@@ -1,7 +1,7 @@
 
 public class DisplayDialogs {
 
-	EmployeeDetails parent;
+	EmployeeGUI parent;
 	CheckInput checkInput = new CheckInput();
 	EmployeeRecordDetails displayeEmployeeRecords = new EmployeeRecordDetails();
 

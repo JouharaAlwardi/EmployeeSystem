@@ -5,7 +5,7 @@ import javax.swing.JMenuItem;
 public class RecordsMenuOption {
 
 	EmployeeRecordDetails recordDetails;
-	EmployeeDetails parent;
+	EmployeeGUI parent;
 	CheckInput check = new CheckInput();
 	Employee currentEmployee;
 
@@ -21,7 +21,7 @@ public class RecordsMenuOption {
 
 	}
 
-	void returnAction(EmployeeDetails parent) {
+	void returnAction(EmployeeGUI parent) {
 
 	}
 
@@ -29,7 +29,7 @@ public class RecordsMenuOption {
 
 class AddRecord extends RecordsMenuOption {
 	@Override
-	void returnAction(EmployeeDetails parent) {
+	void returnAction(EmployeeGUI parent) {
 		new AddRecordDialog(parent);
 
 	}

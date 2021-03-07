@@ -23,50 +23,47 @@ import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
 
-public class EmployeeDetails extends JFrame implements ActionListener, ItemListener, DocumentListener, WindowListener {
+public class EmployeeGUI extends JFrame implements ActionListener, ItemListener, DocumentListener, WindowListener {
 
 	JMenuBar menuBar = new JMenuBar();
 	private boolean change = false;
-	private static EmployeeDetails frame = new EmployeeDetails();
+	private static EmployeeGUI frame = new EmployeeGUI();
 
 	public void actionPerformed(ActionEvent e) {
 		ActionPerformedStatements action = new ActionPerformedStatements();
 		action.actionPerformed(e);
 
-	}// end actionPerformed
+	}
 
 	// content pane for main dialog
 	private void createContentPane() {
 		FileActions createRandomFile = new FileActions();
 		setTitle("Employee Details");
-		createRandomFile.createRandomFile();// create random file name
+		createRandomFile.createRandomFile();
 		JPanel dialog = new JPanel(new MigLayout());
 		Panels panel = new Panels();
 
-		setJMenuBar(menuBar);// add menu bar to frame
-		// add search panel to frame
+		setJMenuBar(menuBar);
+
 		dialog.add(panel.searchPanel(), "width 400:400:400, growx, pushx");
-		// add navigation panel to frame
 		dialog.add(panel.navigPanel(), "width 150:150:150, wrap");
-		// add button panel to frame
 		dialog.add(panel.buttonPanel(), "growx, pushx, span 2,wrap");
-		// add details panel to frame
 		dialog.add(panel.detailsPanel(), "gap top 30, gap left 150, center");
 
 		JScrollPane scrollPane = new JScrollPane(dialog);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 		addWindowListener(this);
-	}// end createContentPane
+	}
 
 	// create and show main dialog
 	private static void createAndShowGUI() {
 
 		frame.setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
-		frame.createContentPane();// add content pane to frame
+		frame.createContentPane();
 		frame.setSize(760, 600);
 		frame.setLocation(250, 200);
 		frame.setVisible(true);
-	}// end createAndShowGUI
+	}
 
 	// main method
 	public static void main(String args[]) {
@@ -75,7 +72,7 @@ public class EmployeeDetails extends JFrame implements ActionListener, ItemListe
 				createAndShowGUI();
 			}
 		});
-	}// end main
+	}
 
 	// DocumentListener methods
 	public void changedUpdate(DocumentEvent d) {

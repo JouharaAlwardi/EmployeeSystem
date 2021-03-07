@@ -57,7 +57,7 @@ class SearchById extends NavigateMenuOption {
 
 class SearchBySurname extends NavigateMenuOption {
 
-	EmployeeDetails parent;
+	EmployeeGUI parent;
 
 	@Override
 	void returnActionDialogs(DisplayDialogs displayDialog) {

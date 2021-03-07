@@ -31,33 +31,14 @@ public class DisplayRecords {
 
 		searchByIdField.setText("");
 		searchBySurnameField.setText("");
-		// if Employee is null or ID is 0 do nothing else display Employee
-		// details
-		if (thisEmployee == null) {
-		} else if (thisEmployee.getEmployeeId() == 0) {
+
+		if (thisEmployee == null || thisEmployee.getEmployeeId() == 0) {
 		} else {
-			// find corresponding gender combo box value to current employee
-			while (!found && countGender < gender.length - 1) {
-				if (Character.toString(thisEmployee.getGender()).equalsIgnoreCase(gender[countGender]))
-					found = true;
-				else
-					countGender++;
-			} // end while
+
+			findGenderValue(countGender, found, thisEmployee);
 			found = false;
-			// find corresponding department combo box value to current employee
-			while (!found && countDep < department.length - 1) {
-				if (thisEmployee.getDepartment().trim().equalsIgnoreCase(department[countDep]))
-					found = true;
-				else
-					countDep++;
-			} // end while
-			idField.setText(Integer.toString(thisEmployee.getEmployeeId()));
-			ppsField.setText(thisEmployee.getPps().trim());
-			surnameField.setText(thisEmployee.getSurname().trim());
-			firstNameField.setText(thisEmployee.getFirstName());
-			genderCombo.setSelectedIndex(countGender);
-			departmentCombo.setSelectedIndex(countDep);
-			salaryField.setText(format.format(thisEmployee.getSalary()));
+			findDeptartmentValue(countDep, found, thisEmployee);
+			setFields(thisEmployee, countDep, countGender);
 			// set corresponding full time combo box value to current employee
 			if (thisEmployee.getFullTime() == true)
 				fullTimeCombo.setSelectedIndex(1);
@@ -66,5 +47,34 @@ public class DisplayRecords {
 		}
 		change = false;
 	}// end display records
+
+	public void setFields(Employee thisEmployee, int countGender, int countDep) {
+		idField.setText(Integer.toString(thisEmployee.getEmployeeId()));
+		ppsField.setText(thisEmployee.getPps().trim());
+		surnameField.setText(thisEmployee.getSurname().trim());
+		firstNameField.setText(thisEmployee.getFirstName());
+		salaryField.setText(format.format(thisEmployee.getSalary()));
+
+	}
+
+	// find corresponding gender combo box value to current employee
+	public void findGenderValue(int countGender, boolean found, Employee thisEmployee) {
+		while (!found && countGender < gender.length - 1) {
+			if (Character.toString(thisEmployee.getGender()).equalsIgnoreCase(gender[countGender]))
+				found = true;
+			else
+				countGender++;
+		}
+	}
+
+	// find corresponding department combo box value to current employee
+	public void findDeptartmentValue(int countDep, boolean found, Employee thisEmployee) {
+		while (!found && countDep < department.length - 1) {
+			if (thisEmployee.getDepartment().trim().equalsIgnoreCase(department[countDep]))
+				found = true;
+			else
+				countDep++;
+		}
+	}
 
 }

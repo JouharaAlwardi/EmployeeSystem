@@ -122,7 +122,7 @@ public class Panels implements ActionListener, DocumentListener, ItemListener {
 	public JPanel detailsPanel() {
 		JPanel empDetails = new JPanel(new MigLayout());
 		JPanel buttonPanel = new JPanel();
-		JTextField field;
+		JTextField field = null;
 
 		empDetails.setBorder(BorderFactory.createTitledBorder("Employee Details"));
 
@@ -163,6 +163,12 @@ public class Panels implements ActionListener, DocumentListener, ItemListener {
 		empDetails.add(buttonPanel, "span 2,growx, pushx,wrap");
 
 		// loop through panel components and add listeners and format
+		loopPanelComponents(empDetails, field);
+		return empDetails;
+	}// end detailsPanel
+
+	public void loopPanelComponents(JPanel empDetails, JTextField field) {
+
 		for (int i = 0; i < empDetails.getComponentCount(); i++) {
 			empDetails.getComponent(i).setFont(font1);
 			if (empDetails.getComponent(i) instanceof JTextField) {
@@ -187,8 +193,8 @@ public class Panels implements ActionListener, DocumentListener, ItemListener {
 				});
 			} // end else if
 		} // end for
-		return empDetails;
-	}// end detailsPanel
+
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {

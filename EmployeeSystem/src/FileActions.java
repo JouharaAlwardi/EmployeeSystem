@@ -13,10 +13,10 @@ public class FileActions {
 
 	File file;
 	boolean change = false;
-	static EmployeeDetails frame = new EmployeeDetails();
+	static EmployeeGUI frame = new EmployeeGUI();
 	RandomFile application = new RandomFile();
 	FileNameExtensionFilter datfilter = new FileNameExtensionFilter("dat files (*.dat)", "dat");
-	EmployeeDetails parent = new EmployeeDetails();
+	EmployeeGUI parent = new EmployeeGUI();
 	Employee currentEmployee;
 	NavigateRecords navigate;
 	DisplayRecords displayRecord;

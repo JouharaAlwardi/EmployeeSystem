@@ -20,22 +20,19 @@ public class EmployeeRecordDetails {
 	boolean change = false;
 	long currentByteStart = 0;
 	private static final DecimalFormat fieldFormat = new DecimalFormat("0.00");
-	private static EmployeeDetails frame = new EmployeeDetails();
+	private static EmployeeGUI frame = new EmployeeGUI();
 
 	// get next free ID from Employees in the file
 	public int getNextFreeId() {
 		int nextFreeId = 0;
-		// if file is empty or all records are empty start with ID 1 else look
-		// for last active record
 		if (file.length() == 0 || !check.isSomeoneToDisplay())
 			nextFreeId++;
 		else {
-			record.lastRecord();// look for last active record
-			// add 1 to last active records ID to get next ID
+			record.lastRecord();
 			nextFreeId = currentEmployee.getEmployeeId() + 1;
 		}
 		return nextFreeId;
-	}// end getNextFreeId
+	}
 
 	// get values from text fields and create Employee object
 	public Employee getChangedDetails() {
@@ -50,50 +47,49 @@ public class EmployeeRecordDetails {
 				Double.parseDouble(salaryField.getText()), fullTime);
 
 		return theEmployee;
-	}// end getChangedDetails
+	}
 
 	// add Employee object to fail
 	public void addRecord(Employee newEmployee) {
-		// open file for writing
+
 		application.openWriteFile(file.getAbsolutePath());
-		// write into a file
 		currentByteStart = application.addRecords(newEmployee);
 		application.closeWriteFile();// close file for writing
-	}// end addRecord
+	}
 
 	// delete (make inactive - empty) record from file
 	public void deleteRecord() {
-		if (check.isSomeoneToDisplay()) {// if any active record in file display
-			// message and delete record
+		if (check.isSomeoneToDisplay()) {
+
 			int returnVal = JOptionPane.showOptionDialog(frame, "Do you want to delete record?", "Delete",
 					JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-			// if answer yes delete (make inactive - empty) record
+
 			if (returnVal == JOptionPane.YES_OPTION) {
-				// open file for writing
+
 				application.openWriteFile(file.getAbsolutePath());
-				// delete (make inactive - empty) record in file proper position
+
 				application.deleteRecords(currentByteStart);
-				application.closeWriteFile();// close file for writing
-				// if any active record in file display next record
+				application.closeWriteFile();
+
 				if (check.isSomeoneToDisplay()) {
-					record.nextRecord();// look for next record
+					record.nextRecord();
 					displayRecords.displayRecords(currentEmployee);
-				} // end if
-			} // end if
-		} // end if
-	}// end deleteDecord
+				}
+			}
+		}
+	}
 
 	// create vector of vectors with all Employee details
 	public Vector<Object> getAllEmloyees() {
-		// vector of Employee objects
+
 		Vector<Object> allEmployee = new Vector<Object>();
-		Vector<Object> empDetails;// vector of each employee details
+		Vector<Object> empDetails;
 		long byteStart = currentByteStart;
 		int firstId;
 
-		record.firstRecord();// look for first record
+		record.firstRecord();
 		firstId = currentEmployee.getEmployeeId();
-		// loop until all Employees are added to vector
+
 		do {
 			empDetails = new Vector<Object>();
 			empDetails.addElement(new Integer(currentEmployee.getEmployeeId()));
@@ -106,28 +102,27 @@ public class EmployeeRecordDetails {
 			empDetails.addElement(new Boolean(currentEmployee.getFullTime()));
 
 			allEmployee.addElement(empDetails);
-			record.nextRecord();// look for next record
-		} while (firstId != currentEmployee.getEmployeeId());// end do - while
+			record.nextRecord();
+		} while (firstId != currentEmployee.getEmployeeId());
 		currentByteStart = byteStart;
 
 		return allEmployee;
-	}// end getAllEmployees
+	}
 
 	// activate field for editing
 	public void editDetails() {
-		// activate field for editing if there is records to display
+
 		if (check.isSomeoneToDisplay()) {
-			// remove euro sign from salary text field
 			salaryField.setText(fieldFormat.format(currentEmployee.getSalary()));
 			change = false;
-			editField.setEnabled(true);// enable text fields for editing
-		} // end if
-	}// end editDetails
+			editField.setEnabled(true);
+		}
+	}
 
 	// ignore changes and set text field unenabled
 	public void cancelChange() {
 		editField.setEnabled(false);
 		displayRecords.displayRecords(currentEmployee);
-	}// end cancelChange
+	}
 
 }
